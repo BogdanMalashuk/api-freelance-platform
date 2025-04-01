@@ -23,7 +23,7 @@ class Project(models.Model):
     description = models.TextField()
     budget = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE)
     status_choices = ['open', 'in_progress', 'completed']
     status = models.CharField(max_length=20, choices=status_choices, default='open')
 
@@ -31,14 +31,33 @@ class Project(models.Model):
         return self.title
 
 
-class Offers(models.Model):
-    project = models.ForeignKey(Project, related_name="offers", on_delete=models.CASCADE)
-    freelancer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="offers", on_delete=models.CASCADE)
+class Offer(models.Model):
+    project = models.ForeignKey(Project, related_name="project", on_delete=models.CASCADE)
+    freelancer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="freelancer", on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     proposal_details = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    status_choices = ['pending', 'accepted', 'rejected']
+
+    status_choices = [
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+    ]
     status = models.CharField(max_length=20, choices=status_choices, default='pending')
 
+    # Уникальность предложения по проекту и фрилансеру
+    class Meta:
+        unique_together = ('project', 'freelancer')
+
     def __str__(self):
-        return f"Offer for {self.project.title} by {self.freelancer.username}"
+        return f"Offer for '{self.project.title}' by {self.freelancer.username}, Status: {self.status}"
+
+
+class Payments(models.Model):
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="sent_payment", on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    project = models.ForeignKey('Project', related_name="payments", on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"payment from {self.sender} to {self.project.creator}"
