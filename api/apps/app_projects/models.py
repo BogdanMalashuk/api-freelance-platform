@@ -1,5 +1,5 @@
 from django.db import models
-from api.api import settings
+from django.conf import settings
 
 
 class Project(models.Model):
@@ -8,7 +8,11 @@ class Project(models.Model):
     budget = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE)
-    status_choices = ['open', 'in_progress', 'completed']
+    status_choices = [
+        ('open', 'Open'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed')
+    ]
     status = models.CharField(max_length=20, choices=status_choices, default='open')
 
     def __str__(self):

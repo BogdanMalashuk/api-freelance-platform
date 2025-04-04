@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Project, Offer
-from project.app_users.serializers import UserSerializer
+from ..app_users.serializers import UserSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):

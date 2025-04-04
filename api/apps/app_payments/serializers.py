@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Payments
-from api.apps.app_users.serializers import UserSerializer
-from api.apps.app_projects.serializers import ProjectSerializer
+from .models import Payment
+from ..app_projects.serializers import ProjectSerializer
+from ..app_users.serializers import UserSerializer
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -9,5 +9,5 @@ class PaymentSerializer(serializers.ModelSerializer):
     project = ProjectSerializer(read_only=True)
 
     class Meta:
-        model = Payments
+        model = Payment
         fields = ['id', 'sender', 'amount', 'created_at', 'project']
