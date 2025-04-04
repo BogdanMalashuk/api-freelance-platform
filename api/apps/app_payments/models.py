@@ -1,5 +1,5 @@
 from django.db import models
-from project.project import settings
+from api.api import settings
 
 
 class Payments(models.Model):
