@@ -2,7 +2,7 @@ from rest_framework import generics
 from django.contrib.auth import get_user_model
 from .serializers import UserPublicSerializer, UserPrivateSerializer, UserRegistrationSerializer
 from ..app_users.permissions import IsOwner, IsAdminUser
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 User = get_user_model()
 

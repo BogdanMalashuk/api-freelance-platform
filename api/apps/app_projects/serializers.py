@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from .models import Project, Offer
-from ..app_users.serializers import UserSerializer
+from ..app_users.serializers import UserPrivateSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    creator = UserSerializer(read_only=True)
+    creator = UserPrivateSerializer(read_only=True)
 
     class Meta:
         model = Project
@@ -13,7 +13,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class OfferSerializer(serializers.ModelSerializer):
     project = ProjectSerializer(read_only=True)
-    freelancer = UserSerializer(read_only=True)
+    freelancer = UserPrivateSerializer(read_only=True)
 
     class Meta:
         model = Offer
