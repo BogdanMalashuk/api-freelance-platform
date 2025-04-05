@@ -27,7 +27,13 @@ class PaymentDeleteView(generics.DestroyAPIView):  # delete /api/payments/<id>/
     permission_classes = [IsOwnerOrAdmin]
 
 
-class PaymentsAdminView(generics.ListAPIView):  # get /api/payments/admin/
+class PaymentDetailView(generics.RetrieveAPIView):  # get /api/payments/<id>/
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+    permission_classes = [IsOwnerOrAdmin]
+
+
+class PaymentsListView(generics.ListAPIView):  # get /api/payments/
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     permission_classes = [IsAdminUser]
