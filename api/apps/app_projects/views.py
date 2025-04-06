@@ -8,10 +8,11 @@ from ..app_users.permissions import IsOwnerOrAdmin, IsOwner
 class ProjectListView(generics.ListAPIView):  # get /api/projects/
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+
     permission_classes = [AllowAny]
 
 
-class ProjectCreateView(generics.CreateAPIView):
+class ProjectCreateView(generics.CreateAPIView):  # post /api/projects/
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated]
 
