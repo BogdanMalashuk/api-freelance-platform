@@ -1,10 +1,13 @@
 from rest_framework import serializers
 from .models import Project, Offer
 from ..app_users.serializers import UserPrivateSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    creator = UserPrivateSerializer(read_only=True)
+    creator = serializers.ReadOnlyField(source='creator.id')
 
     class Meta:
         model = Project

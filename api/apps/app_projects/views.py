@@ -11,12 +11,12 @@ class ProjectListView(generics.ListAPIView):  # get /api/projects/
     permission_classes = [AllowAny]
 
 
-class ProjectCreateView(generics.CreateAPIView):  # post /api/projects/
+class ProjectCreateView(generics.CreateAPIView):
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(creator=self.request.user)
 
 
 class ProjectDetailView(generics.RetrieveAPIView):  # get /api/projects/<id>/
@@ -31,7 +31,7 @@ class ProjectUpdateView(generics.UpdateAPIView):  # put, patch /api/projects/<id
     permission_classes = [IsOwner]
 
 
-class ProjectDeleteView(generics.DestroyAPIView):  # delete /api/projects/<id>/
+class ProjectDeleteView(generics.DestroyAPIView):  # delete /api/projects/<id>/delete/
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [IsOwnerOrAdmin]

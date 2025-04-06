@@ -3,8 +3,8 @@ from .views import ProjectListView, ProjectCreateView, ProjectDetailView, Projec
 
 urlpatterns = [
     path('', ProjectListView.as_view(), name='list-project'),
-    path('', ProjectCreateView.as_view(), name='create-project'),
-    path('<int:id>/', ProjectDetailView.as_view(), name='detail-project'),
-    path('<int:id>/', ProjectUpdateView.as_view(), name='update-project'),
-    path('<int:id>/', ProjectDeleteView.as_view(), name='delete-project'),
+    path('create/', ProjectCreateView.as_view(), name='create-project'),
+    path('<int:pk>/', ProjectDetailView.as_view(), name='detail-project'),
+    path('<int:pk>/update/', ProjectUpdateView.as_view(), name='update-project'),
+    path('<int:pk>/delete/', ProjectDeleteView.as_view(), name='delete-project'),
 ]
