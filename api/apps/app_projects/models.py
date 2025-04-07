@@ -22,7 +22,6 @@ class Project(models.Model):
 class Offer(models.Model):
     project = models.ForeignKey(Project, related_name="offers", on_delete=models.CASCADE)
     freelancer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="offers", on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
     offer_details = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     status_choices = [
