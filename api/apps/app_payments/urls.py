@@ -3,8 +3,8 @@ from .views import PaymentListView, PaymentCreateView, PaymentDeleteView, Paymen
 
 urlpatterns = [
     path('', PaymentListView.as_view(), name='list-owner-payment'),
-    path('', PaymentCreateView.as_view(), name='create-payment'),
+    path('create/', PaymentCreateView.as_view(), name='create-payment'),
     path('<int:id>/', PaymentDetailView.as_view(), name='detail-payment'),
-    path('<int:id>/', PaymentDeleteView.as_view(), name='delete-payment'),
+    path('<int:id>/delete', PaymentDeleteView.as_view(), name='delete-payment'),
     path('', PaymentsListView.as_view(), name='list-all-payment'),
 ]
