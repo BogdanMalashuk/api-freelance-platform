@@ -5,12 +5,12 @@ from ..app_users.permissions import IsOwner, IsOwnerOrAdmin, IsAdminUser
 from rest_framework.permissions import IsAuthenticated
 
 
-class PaymentListView(generics.ListAPIView):  # get /api/payments/
+class PaymentListView(generics.ListAPIView):  # get /api/payments/my/
     serializer_class = PaymentSerializer
     permission_classes = [IsOwner]
 
     def get_queryset(self):
-        return Payment.objects.filter(user=self.request.user)
+        return Payment.objects.filter(creator=self.request.user)
 
 
 class PaymentCreateView(generics.CreateAPIView):  # post /api/payments/
@@ -18,13 +18,7 @@ class PaymentCreateView(generics.CreateAPIView):  # post /api/payments/
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-
-class PaymentDeleteView(generics.DestroyAPIView):  # delete /api/payments/<id>/
-    queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
-    permission_classes = [IsOwnerOrAdmin]
+        serializer.save(creator=self.request.user)
 
 
 class PaymentDetailView(generics.RetrieveAPIView):  # get /api/payments/<id>/
